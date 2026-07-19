@@ -26,11 +26,9 @@
 
     <canvas id="game" class="game-canvas" aria-label="Игровое поле с пузырьками"></canvas>
 
-    <header class="topbar">
-      <div class="brand-row">
-        <p class="brand">Артём</p>
-        <p class="eyebrow">до дня рождения · <span class="date">19 августа</span></p>
-      </div>
+    <header class="hero" id="hero">
+      <p class="brand">Артём</p>
+      <p class="eyebrow">до дня рождения · <span class="date">19 августа</span></p>
 
       <div class="countdown" role="timer" aria-live="polite" aria-atomic="true">
         <div class="unit">
@@ -56,7 +54,7 @@
       <p class="arrived" id="arrived" hidden>С днём рождения!</p>
     </header>
 
-    <aside class="hud" id="hud" hidden>
+    <aside class="hud" id="hud" aria-live="polite">
       <div class="hud-stat">
         <span class="hud-label">счёт</span>
         <span class="hud-value" id="score">0</span>
@@ -77,7 +75,10 @@
     <div class="float-score" id="floatScore" aria-hidden="true"></div>
 
     <section class="sheet" id="startPanel">
-      <div class="sheet-handle" aria-hidden="true"></div>
+      <div class="sheet-head" data-sheet-drag>
+        <div class="sheet-handle" aria-hidden="true"></div>
+        <p class="sheet-peek">Лопни пузырьки · потяни вниз</p>
+      </div>
       <div class="sheet-body">
         <h1 class="sheet-title">Лопни пузырьки</h1>
         <p class="sheet-text">Тапай пузырьки, копи комбо, подними тост.</p>
@@ -105,7 +106,10 @@
     </section>
 
     <section class="sheet sheet-end" id="endPanel" hidden>
-      <div class="sheet-handle" aria-hidden="true"></div>
+      <div class="sheet-head" data-sheet-drag>
+        <div class="sheet-handle" aria-hidden="true"></div>
+        <p class="sheet-peek">Результат · потяни вниз</p>
+      </div>
       <div class="sheet-body">
         <h2 class="sheet-title" id="endTitle">Тост готов!</h2>
         <p class="end-score">
