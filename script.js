@@ -491,8 +491,6 @@
     score += points;
     showFloat(best.x, best.y, points, best.gold);
     updateHud();
-
-    if (score >= GOAL_SCORE) endRound(true);
   }
 
   function startRound() {
