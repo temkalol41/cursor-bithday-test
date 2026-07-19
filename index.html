@@ -17,7 +17,7 @@
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body>
+  <body class="menu-open">
     <div class="atmosphere" aria-hidden="true">
       <div class="glow glow-a"></div>
       <div class="glow glow-b"></div>
@@ -78,40 +78,44 @@
 
     <section class="sheet" id="startPanel">
       <div class="sheet-handle" aria-hidden="true"></div>
-      <h1 class="sheet-title">Лопни пузырьки</h1>
-      <p class="sheet-text">Тапай пузырьки, копи комбо, подними тост.</p>
+      <div class="sheet-body">
+        <h1 class="sheet-title">Лопни пузырьки</h1>
+        <p class="sheet-text">Тапай пузырьки, копи комбо, подними тост.</p>
 
-      <label class="field" for="playerName">
-        <span class="field-label">Твоё имя</span>
-        <input
-          id="playerName"
-          name="playerName"
-          type="text"
-          maxlength="16"
-          placeholder="друг Артёма"
-          autocomplete="nickname"
-          enterkeyhint="done"
-        />
-      </label>
+        <label class="field" for="playerName">
+          <span class="field-label">Твоё имя</span>
+          <input
+            id="playerName"
+            name="playerName"
+            type="text"
+            maxlength="16"
+            placeholder="друг Артёма"
+            autocomplete="nickname"
+            enterkeyhint="done"
+          />
+        </label>
 
-      <button type="button" class="cta" id="startBtn">Играть · 45 сек</button>
+        <button type="button" class="cta" id="startBtn">Играть · 45 сек</button>
 
-      <div class="board-wrap" id="boardWrap">
-        <p class="board-title">Рекорды</p>
-        <ol class="board" id="board" aria-label="Таблица рекордов"></ol>
+        <div class="board-wrap" id="boardWrap">
+          <p class="board-title">Рекорды друзей</p>
+          <ol class="board" id="board" aria-label="Таблица рекордов"></ol>
+        </div>
       </div>
     </section>
 
     <section class="sheet sheet-end" id="endPanel" hidden>
       <div class="sheet-handle" aria-hidden="true"></div>
-      <h2 class="sheet-title" id="endTitle">Тост готов!</h2>
-      <p class="end-score">
-        <span id="endScore">0</span>
-        <small>очков</small>
-      </p>
-      <p class="sheet-text" id="endText">Отличный залп. Друзья, ваш ход.</p>
-      <button type="button" class="cta" id="againBtn">Ещё раунд</button>
-      <button type="button" class="cta cta-ghost" id="menuBtn">К таблице</button>
+      <div class="sheet-body">
+        <h2 class="sheet-title" id="endTitle">Тост готов!</h2>
+        <p class="end-score">
+          <span id="endScore">0</span>
+          <small>очков</small>
+        </p>
+        <p class="sheet-text" id="endText">Отличный залп. Друзья, ваш ход.</p>
+        <button type="button" class="cta" id="againBtn">Ещё раунд</button>
+        <button type="button" class="cta cta-ghost" id="menuBtn">К таблице</button>
+      </div>
     </section>
 
     <p class="hint" id="hint" hidden>Тапай пузырьки</p>

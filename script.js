@@ -110,7 +110,17 @@
   }
 
   function renderBoard() {
-    const list = loadBoard().sort((a, b) => b.score - a.score).slice(0, 5);
+    const raw = loadBoard().sort((a, b) => b.score - a.score);
+    const seen = new Set();
+    const list = [];
+    for (const row of raw) {
+      const key = row.name.trim().toLowerCase();
+      if (!key || seen.has(key)) continue;
+      seen.add(key);
+      list.push(row);
+      if (list.length >= 5) break;
+    }
+
     boardEl.innerHTML = list
       .map(
         (row, i) =>
@@ -119,6 +129,26 @@
           )}</span><span class="pts">${row.score}</span></li>`
       )
       .join("");
+    if (boardWrap) {
+      boardWrap.classList.toggle("is-empty", list.length === 0);
+    }
+  }
+
+  function setMenuOpen(open) {
+    document.body.classList.toggle("menu-open", open);
+    if (open) {
+      playing = false;
+      document.body.classList.remove("playing");
+      hud.hidden = true;
+      hint.hidden = true;
+    }
+  }
+
+  function showStartMenu() {
+    setMenuOpen(true);
+    startPanel.hidden = false;
+    endPanel.hidden = true;
+    renderBoard();
   }
 
   function escapeHtml(value) {
@@ -377,6 +407,7 @@
     bursts = [];
     spawnAcc = 0;
     playing = true;
+    document.body.classList.remove("menu-open");
     document.body.classList.add("playing");
     startPanel.hidden = true;
     endPanel.hidden = true;
@@ -392,6 +423,7 @@
     if (!playing) return;
     playing = false;
     document.body.classList.remove("playing");
+    document.body.classList.add("menu-open");
     hud.hidden = true;
     hint.hidden = true;
     endPanel.hidden = false;
@@ -490,6 +522,7 @@
   }
 
   function onPointer(e) {
+    if (!playing) return;
     e.preventDefault();
     if (e.touches && e.touches.length) {
       for (const t of e.touches) popAt(t.clientX, t.clientY);
@@ -500,11 +533,7 @@
 
   startBtn.addEventListener("click", startRound);
   againBtn.addEventListener("click", startRound);
-  menuBtn.addEventListener("click", () => {
-    endPanel.hidden = true;
-    startPanel.hidden = false;
-    renderBoard();
-  });
+  menuBtn.addEventListener("click", showStartMenu);
 
   canvas.addEventListener("pointerdown", onPointer, { passive: false });
   canvas.addEventListener("touchstart", onPointer, { passive: false });
