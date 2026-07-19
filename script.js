@@ -22,6 +22,7 @@
   const menuBtn = document.getElementById("menuBtn");
   const playerNameInput = document.getElementById("playerName");
   const boardEl = document.getElementById("board");
+  const boardWrap = document.getElementById("boardWrap");
   const hint = document.getElementById("hint");
   const arrived = document.getElementById("arrived");
   const countdown = document.querySelector(".countdown");
