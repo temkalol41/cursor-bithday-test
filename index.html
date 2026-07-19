@@ -2,12 +2,13 @@
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>19 августа — день рождения</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Артём — лопни пузырьки</title>
     <meta
       name="description"
-      content="Отсчёт до 19 августа — дня рождения Артёма"
+      content="Игра ко дню рождения Артёма: лопни пузырьки шампанского до 19 августа"
     />
+    <meta name="theme-color" content="#0b1220" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -21,43 +22,80 @@
       <div class="glow glow-a"></div>
       <div class="glow glow-b"></div>
       <div class="grain"></div>
-      <canvas id="sparks" class="sparks"></canvas>
     </div>
 
-    <main class="stage">
-      <p class="brand">Артём</p>
-      <h1 class="title">
-        <span class="title-line">до дня рождения</span>
-        <span class="date">19 августа</span>
-      </h1>
-      <p class="lede">
-        Ещё чуть-чуть — и можно задувать свечи.
-      </p>
+    <canvas id="game" class="game-canvas" aria-label="Игровое поле с пузырьками"></canvas>
 
-      <div class="countdown" role="timer" aria-live="polite" aria-atomic="true">
-        <div class="unit">
-          <span class="value" data-unit="days">00</span>
-          <span class="label">дней</span>
-        </div>
-        <div class="sep" aria-hidden="true">:</div>
-        <div class="unit">
-          <span class="value" data-unit="hours">00</span>
-          <span class="label">часов</span>
-        </div>
-        <div class="sep" aria-hidden="true">:</div>
-        <div class="unit">
-          <span class="value" data-unit="minutes">00</span>
-          <span class="label">минут</span>
-        </div>
-        <div class="sep" aria-hidden="true">:</div>
-        <div class="unit">
-          <span class="value" data-unit="seconds">00</span>
-          <span class="label">секунд</span>
-        </div>
+    <header class="topbar">
+      <div class="brand-block">
+        <p class="brand">Артём</p>
+        <p class="brand-sub">
+          <span class="title-line">до дня рождения</span>
+          <span class="date">19 августа</span>
+        </p>
       </div>
-
+      <div class="countdown" role="timer" aria-live="polite" aria-atomic="true">
+        <span><strong data-unit="days">0</strong>д</span>
+        <span><strong data-unit="hours">00</strong>ч</span>
+        <span><strong data-unit="minutes">00</strong>м</span>
+        <span><strong data-unit="seconds">00</strong>с</span>
+      </div>
       <p class="arrived" id="arrived" hidden>С днём рождения!</p>
-    </main>
+    </header>
+
+    <aside class="hud" id="hud" hidden>
+      <div class="hud-stat">
+        <span class="hud-label">счёт</span>
+        <span class="hud-value" id="score">0</span>
+      </div>
+      <div class="hud-stat">
+        <span class="hud-label">комбо</span>
+        <span class="hud-value" id="combo">×1</span>
+      </div>
+      <div class="hud-stat">
+        <span class="hud-label">время</span>
+        <span class="hud-value" id="time">45</span>
+      </div>
+      <div class="toast-meter" aria-hidden="true">
+        <div class="toast-fill" id="toastFill"></div>
+        <span class="toast-label">тост</span>
+      </div>
+    </aside>
+
+    <div class="float-score" id="floatScore" aria-hidden="true"></div>
+
+    <section class="panel" id="startPanel">
+      <h1 class="panel-title">Лопни пузырьки</h1>
+      <p class="panel-text">
+        Тапай шампанские пузырьки, собирай комбо и подними тост за именинника.
+        У тебя 45 секунд.
+      </p>
+      <label class="name-field">
+        <span>Твоё имя</span>
+        <input
+          id="playerName"
+          type="text"
+          maxlength="16"
+          placeholder="друг Артёма"
+          autocomplete="nickname"
+        />
+      </label>
+      <button type="button" class="cta" id="startBtn">Играть</button>
+      <ol class="board" id="board" aria-label="Таблица рекордов"></ol>
+    </section>
+
+    <section class="panel panel-end" id="endPanel" hidden>
+      <h2 class="panel-title" id="endTitle">Тост готов!</h2>
+      <p class="end-score">
+        <span id="endScore">0</span>
+        <small>очков</small>
+      </p>
+      <p class="panel-text" id="endText">Отличный залп. Друзья, ваш ход.</p>
+      <button type="button" class="cta" id="againBtn">Ещё раунд</button>
+      <button type="button" class="cta cta-ghost" id="menuBtn">К таблице</button>
+    </section>
+
+    <p class="hint" id="hint" hidden>Тапай пузырьки</p>
 
     <script src="./script.js"></script>
   </body>
