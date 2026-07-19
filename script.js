@@ -139,15 +139,132 @@
     if (open) {
       playing = false;
       document.body.classList.remove("playing");
-      hud.hidden = true;
       hint.hidden = true;
+      expandSheet(startPanel);
+      expandSheet(endPanel);
     }
+  }
+
+  function expandSheet(sheet) {
+    if (!sheet) return;
+    sheet.classList.remove("is-collapsed");
+    sheet.style.transform = "";
+    if (!sheet.hidden) {
+      document.body.classList.remove("sheet-collapsed");
+    }
+  }
+
+  function collapseSheet(sheet) {
+    if (!sheet) return;
+    sheet.classList.add("is-collapsed");
+    sheet.style.transform = "";
+    if (!sheet.hidden) {
+      document.body.classList.add("sheet-collapsed");
+    }
+  }
+
+  function initSheetDrag(sheet) {
+    if (!window.matchMedia("(max-width: 719px)").matches) return;
+
+    const head = sheet.querySelector("[data-sheet-drag]");
+    if (!head) return;
+
+    let startY = 0;
+    let startCollapsed = false;
+    let dragging = false;
+    let deltaY = 0;
+
+    function setDragTransform(y) {
+      sheet.style.transform = y ? `translateY(${y}px)` : "";
+    }
+
+    function onStart(clientY) {
+      if (sheet.hidden || playing) return;
+      dragging = true;
+      startY = clientY;
+      startCollapsed = sheet.classList.contains("is-collapsed");
+      deltaY = 0;
+      sheet.classList.add("is-dragging");
+    }
+
+    function onMove(clientY, prevent) {
+      if (!dragging) return;
+      deltaY = clientY - startY;
+      if (startCollapsed) {
+        const next = Math.min(0, deltaY);
+        sheet.style.transform = `translateY(${next}px)`;
+        if (Math.abs(next) > 6 && prevent) prevent();
+        return;
+      }
+      const next = Math.max(0, deltaY);
+      sheet.style.transform = `translateY(${next}px)`;
+      if (next > 6 && prevent) prevent();
+    }
+
+    function onEnd() {
+      if (!dragging) return;
+      dragging = false;
+      sheet.classList.remove("is-dragging");
+      sheet.style.transform = "";
+
+      if (startCollapsed) {
+        if (deltaY < -50) expandSheet(sheet);
+        else collapseSheet(sheet);
+        return;
+      }
+
+      if (deltaY > 80) collapseSheet(sheet);
+      else expandSheet(sheet);
+      deltaY = 0;
+    }
+
+    head.addEventListener("click", () => {
+      if (sheet.hidden || playing) return;
+      if (sheet.classList.contains("is-collapsed")) expandSheet(sheet);
+    });
+
+    head.addEventListener(
+      "touchstart",
+      (e) => {
+        onStart(e.touches[0].clientY);
+      },
+      { passive: true }
+    );
+
+    head.addEventListener(
+      "touchmove",
+      (e) => {
+        onMove(e.touches[0].clientY, () => e.preventDefault());
+      },
+      { passive: false }
+    );
+
+    head.addEventListener("touchend", onEnd, { passive: true });
+    head.addEventListener("touchcancel", onEnd, { passive: true });
+
+    head.addEventListener("pointerdown", (e) => {
+      if (e.pointerType === "touch") return;
+      onStart(e.clientY);
+      head.setPointerCapture(e.pointerId);
+    });
+
+    head.addEventListener("pointermove", (e) => {
+      if (e.pointerType === "touch" || !dragging) return;
+      onMove(e.clientY, null);
+    });
+
+    head.addEventListener("pointerup", (e) => {
+      if (e.pointerType === "touch") return;
+      onEnd();
+      head.releasePointerCapture(e.pointerId);
+    });
   }
 
   function showStartMenu() {
     setMenuOpen(true);
-    startPanel.hidden = false;
     endPanel.hidden = true;
+    startPanel.hidden = false;
+    expandSheet(startPanel);
     renderBoard();
   }
 
@@ -407,11 +524,10 @@
     bursts = [];
     spawnAcc = 0;
     playing = true;
-    document.body.classList.remove("menu-open");
+    document.body.classList.remove("menu-open", "sheet-collapsed");
     document.body.classList.add("playing");
     startPanel.hidden = true;
     endPanel.hidden = true;
-    hud.hidden = false;
     hint.hidden = false;
     setTimeout(() => {
       hint.hidden = true;
@@ -424,9 +540,10 @@
     playing = false;
     document.body.classList.remove("playing");
     document.body.classList.add("menu-open");
-    hud.hidden = true;
-    hint.hidden = true;
+    startPanel.hidden = true;
     endPanel.hidden = false;
+    expandSheet(endPanel);
+    hint.hidden = true;
     endScore.textContent = String(score);
 
     const board = loadBoard();
@@ -535,8 +652,10 @@
   againBtn.addEventListener("click", startRound);
   menuBtn.addEventListener("click", showStartMenu);
 
+  initSheetDrag(startPanel);
+  initSheetDrag(endPanel);
+
   canvas.addEventListener("pointerdown", onPointer, { passive: false });
-  canvas.addEventListener("touchstart", onPointer, { passive: false });
 
   window.addEventListener("resize", resize);
 
