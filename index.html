@@ -27,48 +27,50 @@
     <canvas id="game" class="game-canvas" aria-label="Игровое поле с пузырьками"></canvas>
 
     <header class="topbar">
-      <p class="brand">Артём</p>
-      <p class="eyebrow">до дня рождения · <span class="date">19 августа</span></p>
+      <div class="brand-row">
+        <p class="brand">Артём</p>
+        <p class="eyebrow">до дня рождения · <span class="date">19 августа</span></p>
+      </div>
 
       <div class="countdown" role="timer" aria-live="polite" aria-atomic="true">
         <div class="unit">
           <strong data-unit="days">0</strong>
-          <span>дней</span>
+          <span>д</span>
         </div>
+        <span class="cd-sep" aria-hidden="true">:</span>
         <div class="unit">
           <strong data-unit="hours">00</strong>
-          <span>часов</span>
+          <span>ч</span>
         </div>
+        <span class="cd-sep" aria-hidden="true">:</span>
         <div class="unit">
           <strong data-unit="minutes">00</strong>
-          <span>мин</span>
+          <span>м</span>
         </div>
+        <span class="cd-sep" aria-hidden="true">:</span>
         <div class="unit">
           <strong data-unit="seconds">00</strong>
-          <span>сек</span>
+          <span>с</span>
         </div>
       </div>
       <p class="arrived" id="arrived" hidden>С днём рождения!</p>
     </header>
 
     <aside class="hud" id="hud" hidden>
-      <div class="hud-row">
-        <div class="hud-stat">
-          <span class="hud-label">счёт</span>
-          <span class="hud-value" id="score">0</span>
-        </div>
-        <div class="hud-stat">
-          <span class="hud-label">комбо</span>
-          <span class="hud-value" id="combo">×1</span>
-        </div>
-        <div class="hud-stat">
-          <span class="hud-label">время</span>
-          <span class="hud-value" id="time">45</span>
-        </div>
+      <div class="hud-stat">
+        <span class="hud-label">счёт</span>
+        <span class="hud-value" id="score">0</span>
+      </div>
+      <div class="hud-stat">
+        <span class="hud-label">комбо</span>
+        <span class="hud-value" id="combo">×1</span>
+      </div>
+      <div class="hud-stat">
+        <span class="hud-label">время</span>
+        <span class="hud-value" id="time">45</span>
       </div>
       <div class="toast-track" aria-hidden="true">
         <div class="toast-fill" id="toastFill"></div>
-        <span class="toast-label">тост</span>
       </div>
     </aside>
 
@@ -77,9 +79,7 @@
     <section class="sheet" id="startPanel">
       <div class="sheet-handle" aria-hidden="true"></div>
       <h1 class="sheet-title">Лопни пузырьки</h1>
-      <p class="sheet-text">
-        Тапай шампанские пузырьки, собирай комбо и подними тост за именинника.
-      </p>
+      <p class="sheet-text">Тапай пузырьки, копи комбо, подними тост.</p>
 
       <label class="field" for="playerName">
         <span class="field-label">Твоё имя</span>
@@ -96,13 +96,13 @@
 
       <button type="button" class="cta" id="startBtn">Играть · 45 сек</button>
 
-      <div class="board-wrap">
-        <p class="board-title">Рекорды друзей</p>
+      <div class="board-wrap" id="boardWrap">
+        <p class="board-title">Рекорды</p>
         <ol class="board" id="board" aria-label="Таблица рекордов"></ol>
       </div>
     </section>
 
-    <section class="sheet" id="endPanel" hidden>
+    <section class="sheet sheet-end" id="endPanel" hidden>
       <div class="sheet-handle" aria-hidden="true"></div>
       <h2 class="sheet-title" id="endTitle">Тост готов!</h2>
       <p class="end-score">
