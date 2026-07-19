@@ -1,7 +1,7 @@
 (() => {
   const MONTH = 7;
   const DAY = 19;
-  const ROUND_SECONDS = 45;
+  const ROUND_SECONDS = 20;
   const GOAL_SCORE = 1200;
   const STORAGE_KEY = "artem-bubble-toast-board";
   const COMBO_WINDOW_MS = 900;
@@ -192,12 +192,12 @@
       deltaY = clientY - startY;
       if (startCollapsed) {
         const next = Math.min(0, deltaY);
-        sheet.style.transform = `translateY(${next}px)`;
+        setDragTransform(next);
         if (Math.abs(next) > 6 && prevent) prevent();
         return;
       }
       const next = Math.max(0, deltaY);
-      sheet.style.transform = `translateY(${next}px)`;
+      setDragTransform(next);
       if (next > 6 && prevent) prevent();
     }
 
@@ -205,7 +205,7 @@
       if (!dragging) return;
       dragging = false;
       sheet.classList.remove("is-dragging");
-      sheet.style.transform = "";
+      setDragTransform(0);
 
       if (startCollapsed) {
         if (deltaY < -50) expandSheet(sheet);
@@ -241,23 +241,6 @@
 
     head.addEventListener("touchend", onEnd, { passive: true });
     head.addEventListener("touchcancel", onEnd, { passive: true });
-
-    head.addEventListener("pointerdown", (e) => {
-      if (e.pointerType === "touch") return;
-      onStart(e.clientY);
-      head.setPointerCapture(e.pointerId);
-    });
-
-    head.addEventListener("pointermove", (e) => {
-      if (e.pointerType === "touch" || !dragging) return;
-      onMove(e.clientY, null);
-    });
-
-    head.addEventListener("pointerup", (e) => {
-      if (e.pointerType === "touch") return;
-      onEnd();
-      head.releasePointerCapture(e.pointerId);
-    });
   }
 
   function showStartMenu() {
