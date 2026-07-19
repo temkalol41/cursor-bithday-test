@@ -318,7 +318,7 @@
     comboEl.textContent = `×${combo}`;
     timeEl.textContent = String(Math.max(0, Math.ceil(timeLeft)));
     const fill = Math.min(100, (score / GOAL_SCORE) * 100);
-    toastFill.style.height = `${fill}%`;
+    toastFill.style.width = `${fill}%`;
   }
 
   function popAt(clientX, clientY) {
