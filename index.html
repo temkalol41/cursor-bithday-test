@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>19 августа — день рождения</title>
+    <meta
+      name="description"
+      content="Отсчёт до 19 августа — дня рождения Артёма"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Fraunces:opsz,wght@9..144,500;9..144,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="atmosphere" aria-hidden="true">
+      <div class="glow glow-a"></div>
+      <div class="glow glow-b"></div>
+      <div class="grain"></div>
+      <canvas id="sparks" class="sparks"></canvas>
+    </div>
+
+    <main class="stage">
+      <p class="brand">Артём</p>
+      <h1 class="title">
+        <span class="title-line">до дня рождения</span>
+        <span class="date">19 августа</span>
+      </h1>
+      <p class="lede">
+        Ещё чуть-чуть — и можно задувать свечи.
+      </p>
+
+      <div class="countdown" role="timer" aria-live="polite" aria-atomic="true">
+        <div class="unit">
+          <span class="value" data-unit="days">00</span>
+          <span class="label">дней</span>
+        </div>
+        <div class="sep" aria-hidden="true">:</div>
+        <div class="unit">
+          <span class="value" data-unit="hours">00</span>
+          <span class="label">часов</span>
+        </div>
+        <div class="sep" aria-hidden="true">:</div>
+        <div class="unit">
+          <span class="value" data-unit="minutes">00</span>
+          <span class="label">минут</span>
+        </div>
+        <div class="sep" aria-hidden="true">:</div>
+        <div class="unit">
+          <span class="value" data-unit="seconds">00</span>
+          <span class="label">секунд</span>
+        </div>
+      </div>
+
+      <p class="arrived" id="arrived" hidden>С днём рождения!</p>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
